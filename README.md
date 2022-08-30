@@ -1,1 +1,1 @@
-# stable-diffusion-docker-batch
+# stable-diffusion-API
