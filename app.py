@@ -1,22 +1,26 @@
 import io
 import os
 import warnings
-
 from PIL import Image
+
+from dotenv import load_dotenv
 from stability_sdk import client
 import stability_sdk.interfaces.gooseai.generation.generation_pb2 as generation
 from flask import Flask
 
+
+load_dotenv()
 app = Flask(__name__)
+
 
 @app.route("/")
 def hello():
     stability_api = client.StabilityInference(
-        key=os.environ['STABILITY_KEY'], 
+        key=os.environ['STABILITY_KEY'],
         verbose=True,
     )
     answers = stability_api.generate(
-    prompt="houston, we are a 'go' for launch!"
+        prompt="houston, we are a 'go' for launch!"
     )
     # iterating over the generator produces the api response
     for resp in answers:
@@ -27,5 +31,5 @@ def hello():
                     "Please modify the prompt and try again.")
             if artifact.type == generation.ARTIFACT_IMAGE:
                 img = Image.open(io.BytesIO(artifact.binary))
-                # save file
+                img.save("hello.png")
     return "Hello, World!"
