@@ -36,3 +36,7 @@ def generate():
                     io.BytesIO(artifact.binary),
                     mimetype='image/png'
                 )
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=os.environ['PORT'])
